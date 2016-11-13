@@ -2,6 +2,8 @@
 #define __JSMN_H_
 
 #include <stddef.h>
+#include <string.h>
+#include <stdio.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -393,4 +395,23 @@ static int jsoneq(const char *json, jsmntok_t *tok, const char *s) {
 		return 0;
 	}
 	return -1;
+}
+
+static jsmntok_t tokensGerados[128];
+static int totalGerados = 0;
+
+void parseDados(const char * json){
+	jsmn_parser p;
+	jsmn_init(&p);
+	totalGerados = jsmn_parse(&p, json, strlen(json), tokensGerados, sizeof(tokensGerados)/sizeof(tokensGerados[0]));
+}
+
+void obterDado(char * val, const char * json, const char * parametro){
+	int i;
+	for (i = 1; i < totalGerados; i++) {
+		if (jsoneq(json, &tokensGerados[i], parametro) == 0) {
+			strncpy(val, json+tokensGerados[i+1].start,tokensGerados[i+1].end-tokensGerados[i+1].start);
+			break;
+		} 
+	}
 }
