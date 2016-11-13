@@ -7,6 +7,29 @@
 #include<windows.h>
 #include<locale.h>
 
+#define ERRO_CODIGO 1
+#define ERRO_NOMECLIENTE 2
+#define ERRO_EMAIL 3
+#define ERRO_SEXOCLIENTE 4
+#define ERRO_CPF 5
+#define ERRO_DATADIA 6
+#define ERRO_DATAMES 7
+#define ERRO_DATAANO 8
+#define ERRO_PETNOME 9
+#define ERRO_PETRACA 10
+#define ERRO_PETSEXO 11
+#define ERRO_PETIDADE 12
+#define ERRO_TELEFONEDDD 13
+#define ERRO_NUMEROTELEFONE 14
+#define ERRO_TELEFONETIPO 15
+#define ERRO_RUA 16
+#define ERRO_COMPLEMENTO 17
+#define ERRO_BAIRRO 18
+#define ERRO_CIDADE 19
+#define ERRO_ESTADO 20
+#define ERRO_CEP 21
+#define ERRO_NUMEROENDERECO 22
+
 void limparChar(char vetor[], int tamanho){
 	int i;
 	for(i=0; i<tamanho; i++){
@@ -88,7 +111,75 @@ void limparCliente (struct cliente *cliente){
 void limparproduto (struct produto *produto){
 	limparInt(&produto->codigoProduto);
 	limparChar(&produto->nomeProduto,50);
-	LimparFloat(&produto->preco);
+	limparFloat(&produto->preco);
 }
 
+void mostrarErro (int codigo, char* mERRO){
+	switch(codigo){
+		case ERRO_CODIGO:
+			strcpy(mERRO, "Código do cliente inválido.");
+			break;
+		case ERRO_NOMECLIENTE:
+			strcpy(mERRO, "Nome do cliente inválido.");
+			break;
+		case ERRO_EMAIL:
+			strcpy(mERRO, "E-mail inválido.");
+			break;
+		case ERRO_SEXOCLIENTE:
+			strcpy(mERRO, "Sexo inválido.");
+			break;
+		case ERRO_CPF:
+			strcpy(mERRO, "CPF inválido.");
+			break;
+		case ERRO_DATADIA:
+			strcpy(mERRO, "Data inválida.");
+			break;
+		case ERRO_DATAMES:
+			strcpy(mERRO, "Mês inválido.");
+			break;
+		case ERRO_DATAANO:
+			strcpy(mERRO, "Ano inválido.");
+			break;
+		case ERRO_PETNOME:
+			strcpy(mERRO, "Nome do animal inválido.");
+			break;
+		case ERRO_PETRACA:
+			strcpy(mERRO, "Raça do animal inválida.");
+			break;
+		case ERRO_PETIDADE:
+			strcpy(mERRO, "Idade do animal inválida.");
+			break;
+		case ERRO_TELEFONEDDD:
+		strcpy(mERRO, "DDD inválido.");
+			break;
+		case ERRO_NUMEROTELEFONE:
+			strcpy(mERRO, "Número do telefone inválido.");
+			break;
+		case ERRO_TELEFONETIPO:
+			strcpy(mERRO, "Tipo de telefone inválido.");
+			break;
+		case ERRO_RUA:
+			strcpy(mERRO, "Nome da rua inválido.");
+			break;
+		case ERRO_COMPLEMENTO:
+			strcpy(mERRO, "Complemento inválido.");
+			break;
+		case ERRO_BAIRRO:
+			strcpy(mERRO, "Bairro inválido.");
+			break;
+		case ERRO_CIDADE:
+			strcpy(mERRO, "Cidade inválida.");
+			break;
+		case ERRO_ESTADO:
+			strcpy(mERRO, "Estado inválido.");
+			break;
+		case ERRO_CEP:
+			strcpy(mERRO, "CEP inválido.");
+			break;
+		case ERRO_NUMEROENDERECO:
+			strcpy(mERRO, "Número de endereço inválido.");
+			break;
+	}
+	
+}
 
