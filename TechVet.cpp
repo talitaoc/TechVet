@@ -301,6 +301,8 @@ int main(){
 	return 0;
 }
 
+
+
 int salvarCliente(struct cliente* cliente){ //FILE é um tipo, uma struct.
 	FILE *arquivo = fopen("techvet.bd","a+"); //fopen cria um arquivo e devolve o endereço de memória de onde está o arquivo. Tem que ser o tipo ponteiro por devolver um endereço.
 	char auxiliar[1024],buffer[100];
