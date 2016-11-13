@@ -45,6 +45,6 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
-.exe
-.gch
-.bd
+*.exe
+*.gch
+*.bd
