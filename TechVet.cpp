@@ -9,6 +9,9 @@
 #include "jsmn.h"
 
 #define ESC 27
+#define CODIGOCLIENTE 1
+#define ERRO_CODIGO 1
+
 
 void salvar(struct cliente* cliente);
 void leitura();
@@ -16,31 +19,34 @@ void lerCliente(char[],struct cliente*);
 
 struct endereco{
 	char rua[30], complemento[20], bairro[20], cidade[20], estado[20], cep[20];
-	int numero;
+	int numeroEndereco;
 };
 struct animal{
-	char nome[20], raca[20], sexo[1];
+	char nomeAnimal[20], raca[20], sexoAnimal;
 	int idade;
 };
 struct nascimento{
 	int dia, mes, ano;
 };
 struct telefone{
-	int ddd, numero, tipo;
+	int ddd, numeroTelefone, tipo;
 };
 struct cliente{
-	char codigoCliente[10], nome[20], email[20], sexo;
+	int codigoCliente;
+	char nomeCliente[20], email[20], sexoCliente;
 	long long int cpf;
 	struct nascimento data;
-	struct animal pet;
-	struct telefone contato;
+	struct animal pet[10];
+	struct telefone contato[10];
 	struct endereco endereco;
+	int totalAnimais;
+	int totalTelefones;
 };
 
 int main(){
 	
 	setlocale(LC_ALL,"Portuguese");
-	int menu1=1,menu2,menu3;
+	int menu1=1,menu2,menu3,quant_animal,quant_telefone;
 	
 	while(menu1!=ESC){
 		printf("\n\t*************************************************************");
@@ -85,11 +91,133 @@ int main(){
 					
 					switch(menu2){
 						case '1' :
-							printf("CADASTRAR UM NOVO CLIENTE\n\n");
+							printf("********CADASTRAR UM NOVO CLIENTE********\n\n");
+								printf("\nINFORMAÇÕES PESSOAIS DO CLIENTE:\n");
+								printf("Insira o código do cliente:\n");
+								gets(cliente.codigocliente);
+								fflush(stdin);
+								printf("Informe o nome:\n");
+								gets(cliente.nome);
+								fflush(stdin);
+								printf("Informe o e-mail:\n");
+								gets(cliente.email);
+								fflush(stdin);
+								printf("Informe o sexo:\n");
+								gets(cliente.sexo);
+								fflush(stdin);
+								printf("Insira o CPF:\n");
+								scanf("%d", &cliente.cpf);
+								fflush(stdin);
+								printf("Informe o dia de nascimento:\n");
+								scanf("%d", &cliente.data.dia);
+								fflush(stdin);
+								printf("Informe o mês de nascimento:\n");
+								scanf("%d", &cliente.data.mes);
+								fflush(stdin);
+								printf("Informe o ano de nascimento:\n");
+								scanf("%d", &cliente.data.ano);
+								fflush(stdin);
+								printf("\nINFORMAÇÕES RESIDENCIAIS:\n\n");
+								printf("Rua:\n");
+								gets(cliente.endereco.rua);
+								fflush(stdin);
+								printf("Número:\n");
+								scanf("%d", &cliente.endereco.numero);
+								fflush(stdin);
+								printf("Complemento:\n");
+								gets(cliente.endereco.complemento);
+								fflush(stdin);
+								printf("Bairro:\n");
+								gets(cliente.endereco.bairro);
+								fflush(stdin);
+								printf("Cidade:\n");
+								gets(cliente.endereco.cidade);
+								fflush(stdin);
+								printf("Estado:\n");
+								gets(cliente[i].endereco.estado);
+								fflush(stdin);
+								printf("CEP:\n");
+								scanf("%d", &cliente[i].endereco.cep);
+								fflush(stdin);
+								printf("\nINFORMAÇÕES DE CONTATO:\n\n");
+								do{
+									printf("Digite 1 para inserir os números telefones:\n");
+									printf("Digite 0 para sair:\n");
+									scanf("%d", &quant_telefone);
+									fflush(stdin);
+									if(quant_telefone==1){
+									printf("DDD:\n");
+									scanf("%d",&cliente.contato[i].ddd);
+									fflush(stdin);
+									printf("Telefone:\n");
+									scanf("%d",&cliente.contato[i].numeroTelefone);
+									fflush(stdin);
+									printf("Tipo: (0-fixo 1-celular 2-comercial)\n");
+									scanf("%d",&cliente.contato[i].tipo);
+									cliente.totalTelefones=cliente.totalTelefones+1;
+								}while(quant_telefone==1);
+								do{
+									printf("Digite 1 para inserir os dados no animal:\n");
+									printf("Digite 0 para sair:\n");
+									scanf("%d", &quant_animal);
+									fflush(stdin);
+									if(quant_animal==1){
+										printf("Digite o nome do animal:\n");
+										gets(cliente[i].pet.nome);
+										fflush(stdin);
+										printf("Informe a raça do animal:\n");
+										gets(cliente[i].pet.raca);
+										fflush(stdin);
+										printf("Informe o sexo do animal:\n");
+										gets(cliente[i].pet.sexo);
+										fflush(stdin);
+										printf("Informe a idade do animal:\n");
+										scanf("%d", &cliente[i].pet.idade);
+										fflush(stdin);
+										cliente.totalAnimais=cliente.totalAnimais+1;
+									}
+								}
+								while(quant_animal == 1);
 							salvar(NULL);
+							system("cls");
 							break;
 						case '2' :
-							printf("LISTAR TODOS OS CLIENTES CADASTRADOS\n\n");
+							printf("*********LISTAR TODOS OS CLIENTES CADASTRADOS**********\n\n");
+							printf("DADOS CADASTRADOS:\n\n");
+							printf("-------------------------------------------------\n");
+							printf("Código do cliente: %s\n", cliente.codigocliente);
+							printf("Nome do proprietário:%s \n", cliente.nome);
+							printf("E-mail: %s\n", cliente.email);
+							printf("Sexo: %s\n", cliente.sexo);
+							printf("Data de nascimento: %d/%d/%d\n", cliente.data.dia, cliente.data.mes, cliente.data.ano);
+							printf("CPF:\n", cliente.cpf);
+							printf("DADOS RESIDENCIAIS:\n\n");
+							printf("Rua:%s\n", cliente.endereco.rua);
+							printf("Número:%d\n", cliente.endereco.numero);
+							printf("Complemento:%s\n", cliente.endereco.complemento);
+							printf("Bairro:%s\n", cliente.endereco.bairro);
+							printf("Cidade: %s\n", cliente.endereco.cidade);
+							printf("Estado: %s\n", cliente.endereco.estado);
+							printf("CEP: %d\n", cliente.endereco.cep);
+							printf("INFORMAÇÕES DE CONTATO:\n");
+							for(i=0;i<cliente.totalTelefones;i++){
+								printf("DDD %d\n", cliente.contato[i].ddd) 
+								printf("Telefone: %d\n",cliente.contato[i].numeroTelefone);
+								if(cliente.contato.tipo == 0){
+									printf("Tipo: fixo\n");
+								}else if(cliente.contato.tipo == 1){
+									printf("Tipo: celular\n");
+								}else {
+									printf("Tipo: comercial\n");
+								}
+							}
+							for(i=0;i<cliente.totalAnimais;i++){
+								printf("INFORMAÇÕES DO ANIMAL:\n\n");
+								printf("Nome:%s \n", cliente[i].pet.nome);
+								printf("Raça:%s \n", cliente[i].pet.raca);
+								printf("Sexo:%s \n", cliente[i].pet.sexo);
+								printf("Idade:%d \n", cliente[i].pet.idade);
+							}
 							leitura();
 							break;
 						case '3' :
@@ -116,10 +244,9 @@ int main(){
 					printf("\n\t*           # DIGITE O NUMERO DA OPCAO DESEJADA:            *");
 					printf("\n\t*                                                           *");
 					printf("\n\t*            1 - CADASTRAR PRODUTOS PARA VENDA ;            *");
-					printf("\n\t*            2 - VENDA DE PRODUTOS E SERVIÇOS ;             *");
-					printf("\n\t*            3 - LISTAR TODOS OS PRODUTOS CADASTRADOS ;     *");
-					printf("\n\t*            4 - CONSULTAR PRODUTOS CADASTRADOS NO SISTEMA; *");
-					printf("\n\t*            5 - REMOVER PRODUTOS CADASTRADOS ;             *");
+					printf("\n\t*            2 - LISTAR TODOS OS PRODUTOS CADASTRADOS ;     *");
+					printf("\n\t*            3 - CONSULTAR PRODUTOS CADASTRADOS NO SISTEMA; *");
+					printf("\n\t*            4 - REMOVER PRODUTOS CADASTRADOS ;             *");
 					printf("\n\t*           ESC - VOLTAR AO MENU PRINCIPAL ;                *");
 					printf("\n\t*                                                           *");
 					printf("\n\t*                                                           *");
@@ -134,15 +261,12 @@ int main(){
 							printf("CADASTRAR PRODUTOS PARA VENDA\n\n");
 							break;
 						case '2' :
-							printf("VENDA DE PRODUTOS E SERVIÇOS\n\n");
-							break;
-						case '3' :
 							printf("LISTAR TODOS OS PRODUTOS CADASTRADOS\n\n");
 							break;
-						case '4' :
+						case '3' :
 							printf("CONSULTAR PRODUTOS CADASTRADOS NO SISTEMA\n\n");
 							break;
-						case '5' :
+						case '4' :
 							printf("REMOVER PRODUTOS CADASTRADOS\n\n");
 							break;
 						default:
@@ -161,92 +285,93 @@ int main(){
 	return 0;
 }
 
-void salvar(struct cliente* cliente){ //FILE é um tipo, uma struct.
-	FILE *arquivo = fopen("techvet.bd","w"); //fopen cria um arquivo e devolve o endereço de memória de onde está o arquivo. Tem que ser o tipo ponteiro por devolver um endereço.
+int salvar(struct cliente* cliente){ //FILE é um tipo, uma struct.
+	FILE *arquivo = fopen("techvet.bd","a+"); //fopen cria um arquivo e devolve o endereço de memória de onde está o arquivo. Tem que ser o tipo ponteiro por devolver um endereço.
 	char auxiliar[1024];
 	strcpy(auxiliar,"{\"codigoCliente\":");
-	strcat(auxiliar,"1");
-	strcat(auxiliar,",\"nome\":");
-	strcat(auxiliar,"\"Talita Orlando\"");
+	if(cliente->codigoCliente <= 0){
+		return ERRO_CODIGO; 
+	}
+	strcat(auxiliar, itoa(cliente->codigoCliente));//função itoa transforma int em array de char. json só lê char.
+	strcat(auxiliar,",\"nomeCliente\":");
+	if(cliente->nomeCliente )
+	strcat(auxiliar,cliente->nomeCliente);
 	strcat(auxiliar,",\"email\":");
-	strcat(auxiliar,"\"talitaoc@gmail.com\"");
-	strcat(auxiliar,",\"sexo\":");
-	strcat(auxiliar,"\"f\"");
+	strcat(auxiliar,cliente->email);
+	strcat(auxiliar,",\"sexoCliente\":");
+	strcat(auxiliar,cliente->sexoCliente);
 	strcat(auxiliar,",\"cpf\":");
-	strcat(auxiliar,"36852346846");
+	strcat(auxiliar,cliente->cpf);
 	strcat(auxiliar,",\"nascimento\":");
 	strcat(auxiliar,"{\"dia\":");
-	strcat(auxiliar,"08");
+	strcat(auxiliar,cliente->data.dia);
 	strcat(auxiliar,",\"mes\":");
-	strcat(auxiliar,"03");
+	strcat(auxiliar,cliente->data.mes);
 	strcat(auxiliar,",\"ano\":");
-	strcat(auxiliar,"1988");
+	strcat(auxiliar,cliente->data.ano);
 	strcat(auxiliar,"}");
+	strcat(auxiliar,",\"totalAnimais\":");
+	strcat(auxiliar,cliente->totalAnimais);
 	strcat(auxiliar,",\"animal\":[");
-	strcat(auxiliar,"{\"nome\":");
-	strcat(auxiliar,"\"lince\"");
-	strcat(auxiliar,",\"raca\":");
-	strcat(auxiliar,"\"SRD\"");
-	strcat(auxiliar,",\"sexo\":");
-	strcat(auxiliar,"\"f\"");
-	strcat(auxiliar,",\"idade\":");
-	strcat(auxiliar,"10");
-	strcat(auxiliar,"}");
+	for(i=0;i<cliente->totalAnimais;i++){
+		strcat(auxiliar,"{\"nomeAnimal\":");
+		strcat(auxiliar,cliente[i]->pet.nomeAnimal);
+		strcat(auxiliar,",\"raca\":");
+		strcat(auxiliar,cliente[i]->pet.raca);
+		strcat(auxiliar,",\"sexoAnimal\":");
+		strcat(auxiliar,cliente[i]->pet.sexoAnimal);
+		strcat(auxiliar,",\"idade\":");
+		strcat(auxiliar,cliente[i]->pet.idade);
+		strcat(auxiliar,"}");
+	}
 	strcat(auxiliar,"]");
+	strcat(auxiliar,",\"totalTelefone\":");
+	strcat(auxiliar,cliente->totalTelefones);
 	strcat(auxiliar,",\"telefone\":[");
-	strcat(auxiliar,"{\"ddd\":");
-	strcat(auxiliar,"41");
-	strcat(auxiliar,",\"numero\":");
-	strcat(auxiliar,"30226317");
-	strcat(auxiliar,",\"tipo\":");
-	strcat(auxiliar,"0");
-	strcat(auxiliar,"}");
+	for(i=0;i<cliente->totalTelefones;i++){
+		strcat(auxiliar,"{\"ddd\":");
+		strcat(auxiliar,cliente[i]->contato.ddd);
+		strcat(auxiliar,",\"numeroTelefone\":");
+		strcat(auxiliar,cliente[i]->contato.numeroTelefone);
+		strcat(auxiliar,",\"tipo\":");
+		strcat(auxiliar,cliente[i]->contato.tipo);
+		strcat(auxiliar,"}");
+	}
 	strcat(auxiliar,"]");
 	strcat(auxiliar,",\"endereco\":");
 	strcat(auxiliar,"{\"rua\":");
-	strcat(auxiliar,"\"Ponta grossa\"");
+	strcat(auxiliar, cliente->endereco.rua);
 	strcat(auxiliar,",\"complemento\":");
-	strcat(auxiliar,"\"Apartamento 11\"");
+	strcat(auxiliar,cliente->endereco.complemento);
 	strcat(auxiliar,",\"bairro\":");
-	strcat(auxiliar,"\"Portão\"");
+	strcat(auxiliar,cliente->endereco.bairro);
 	strcat(auxiliar,",\"cidade\":");
-	strcat(auxiliar,"\"Curitiba\"");
+	strcat(auxiliar,cliente->endereco.cidade);
 	strcat(auxiliar,",\"estado\":");
-	strcat(auxiliar,"\"Paraná\"");
+	strcat(auxiliar,cliente->endereco.estado);
 	strcat(auxiliar,",\"cep\":");
-	strcat(auxiliar,"80610160");
-	strcat(auxiliar,",\"numero\":");
-	strcat(auxiliar,"249");
+	strcat(auxiliar,cliente->endereco.cep);
+	strcat(auxiliar,",\"numeroEndereco\":");
+	strcat(auxiliar,cliente->endereco.numeroEndereco);
 	strcat(auxiliar,"}");
-	strcat(auxiliar,"}");
+	strcat(auxiliar,"},\n");
 	fputs(auxiliar, arquivo); //escrever dentro do endereço criado.
 	fclose(arquivo);
 }
 void leitura(){ 
+	struct cliente cliente;
 	FILE *arquivo = fopen("techvet.bd","r"); 
-	char msg[1024]; //criar uma variavel pra receber o que vou ler.
-    fgets(msg, 1024, arquivo); //leitura de uma linha do arquivo.
-    lerCliente(msg,NULL);
+	char dadosArquivo[1024]; //criar uma variavel pra receber o que vou ler.
+    fgets(dadosArquivo, 1024, arquivo); //leitura de uma linha do arquivo.
+    lerCliente(dadosArquivo, &cliente);
+    printf("%d\n",cliente.codigoCliente);
 	fclose(arquivo);
 }
 
-void lerCliente(char *clienteChar, struct cliente* cliente){ //transformar JSON em struct.
-	jsmn_parser p;
-	jsmntok_t t[128]; /* We expect no more than 128 tokens */
-	int i;
-	
-	jsmn_init(&p);
-	int r = jsmn_parse(&p, clienteChar, strlen(clienteChar), t, sizeof(t)/sizeof(t[0]));
-	if (r < 0) {
-		printf("Failed to parse JSON: %d\n", r);
-	}
-	for (i = 1; i < r; i++) {
-		if (jsoneq(clienteChar, &t[i], "codigoCliente") == 0) {
-			printf("- codigoCliente: %.*s\n", t[i+1].end-t[i+1].start, clienteChar + t[i+1].start);
-			i++;
-		}else if (jsoneq(clienteChar, &t[i], "nome") == 0) {
-			printf("- nome: %.*s\n", t[i+1].end-t[i+1].start, clienteChar + t[i+1].start);
-			i++;
-		} 
-	}
+void lerCliente(char *dadosArquivo, struct cliente* cliente){ //transformar JSON em struct.
+	parseDados(dadosArquivo);
+	char valor[100];
+	obterDado(valor, dadosArquivo, "codigoCliente");
+	cliente->codigoCliente = atoi(valor);// quando a struct é ponteiro se usa "->" para acessar seus membros.
+	//atoi = array to int - transformar um array char em um inteiro...um char tem 1 byte, 1 inteiro tem 4 bytes.
 }
