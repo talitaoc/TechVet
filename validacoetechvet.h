@@ -21,6 +21,10 @@ void limparInt (int *valor){
 	*valor = 0;
 }
 
+void limparFloat( float *valor){
+	*valor = 0;
+}
+
 void limparlonglongInt (int *valor){
 	*valor = 0;
 }
@@ -81,6 +85,10 @@ void limparCliente (struct cliente *cliente){
 	limparInt(&cliente->endereco.numeroEndereco);
 }
 
-
+void limparproduto (struct produto *produto){
+	limparInt(&produto->codigoProduto);
+	limparChar(&produto->nomeProduto,50);
+	LimparFloat(&produto->preco);
+}
 
 
