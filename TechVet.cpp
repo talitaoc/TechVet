@@ -6,8 +6,36 @@
 #include<time.h>
 #include<windows.h>
 #include<locale.h>
+#include "jsmn.h"
 
 #define ESC 27
+
+void salvar(struct cliente* cliente);
+void leitura();
+void lerCliente(char[],struct cliente*);
+
+struct endereco{
+	char rua[30], complemento[20], bairro[20], cidade[20], estado[20], cep[20];
+	int numero;
+};
+struct animal{
+	char nome[20], raca[20], sexo[1];
+	int idade;
+};
+struct nascimento{
+	int dia, mes, ano;
+};
+struct telefone{
+	int ddd, numero, tipo;
+};
+struct cliente{
+	char codigoCliente[10], nome[20], email[20], sexo;
+	long long int cpf;
+	struct nascimento data;
+	struct animal pet;
+	struct telefone contato;
+	struct endereco endereco;
+};
 
 int main(){
 	
@@ -58,9 +86,11 @@ int main(){
 					switch(menu2){
 						case '1' :
 							printf("CADASTRAR UM NOVO CLIENTE\n\n");
+							salvar(NULL);
 							break;
 						case '2' :
 							printf("LISTAR TODOS OS CLIENTES CADASTRADOS\n\n");
+							leitura();
 							break;
 						case '3' :
 							printf("CONSULTAR CLIENTE CADASTRADO\n\n");
@@ -127,5 +157,96 @@ int main(){
 			default:
 				break;
 		}	
+	}
+	return 0;
+}
+
+void salvar(struct cliente* cliente){ //FILE é um tipo, uma struct.
+	FILE *arquivo = fopen("techvet.bd","w"); //fopen cria um arquivo e devolve o endereço de memória de onde está o arquivo. Tem que ser o tipo ponteiro por devolver um endereço.
+	char auxiliar[1024];
+	strcpy(auxiliar,"{\"codigoCliente\":");
+	strcat(auxiliar,"1");
+	strcat(auxiliar,",\"nome\":");
+	strcat(auxiliar,"\"Talita Orlando\"");
+	strcat(auxiliar,",\"email\":");
+	strcat(auxiliar,"\"talitaoc@gmail.com\"");
+	strcat(auxiliar,",\"sexo\":");
+	strcat(auxiliar,"\"f\"");
+	strcat(auxiliar,",\"cpf\":");
+	strcat(auxiliar,"36852346846");
+	strcat(auxiliar,",\"nascimento\":");
+	strcat(auxiliar,"{\"dia\":");
+	strcat(auxiliar,"08");
+	strcat(auxiliar,",\"mes\":");
+	strcat(auxiliar,"03");
+	strcat(auxiliar,",\"ano\":");
+	strcat(auxiliar,"1988");
+	strcat(auxiliar,"}");
+	strcat(auxiliar,",\"animal\":[");
+	strcat(auxiliar,"{\"nome\":");
+	strcat(auxiliar,"\"lince\"");
+	strcat(auxiliar,",\"raca\":");
+	strcat(auxiliar,"\"SRD\"");
+	strcat(auxiliar,",\"sexo\":");
+	strcat(auxiliar,"\"f\"");
+	strcat(auxiliar,",\"idade\":");
+	strcat(auxiliar,"10");
+	strcat(auxiliar,"}");
+	strcat(auxiliar,"]");
+	strcat(auxiliar,",\"telefone\":[");
+	strcat(auxiliar,"{\"ddd\":");
+	strcat(auxiliar,"41");
+	strcat(auxiliar,",\"numero\":");
+	strcat(auxiliar,"30226317");
+	strcat(auxiliar,",\"tipo\":");
+	strcat(auxiliar,"0");
+	strcat(auxiliar,"}");
+	strcat(auxiliar,"]");
+	strcat(auxiliar,",\"endereco\":");
+	strcat(auxiliar,"{\"rua\":");
+	strcat(auxiliar,"\"Ponta grossa\"");
+	strcat(auxiliar,",\"complemento\":");
+	strcat(auxiliar,"\"Apartamento 11\"");
+	strcat(auxiliar,",\"bairro\":");
+	strcat(auxiliar,"\"Portão\"");
+	strcat(auxiliar,",\"cidade\":");
+	strcat(auxiliar,"\"Curitiba\"");
+	strcat(auxiliar,",\"estado\":");
+	strcat(auxiliar,"\"Paraná\"");
+	strcat(auxiliar,",\"cep\":");
+	strcat(auxiliar,"80610160");
+	strcat(auxiliar,",\"numero\":");
+	strcat(auxiliar,"249");
+	strcat(auxiliar,"}");
+	strcat(auxiliar,"}");
+	fputs(auxiliar, arquivo); //escrever dentro do endereço criado.
+	fclose(arquivo);
+}
+void leitura(){ 
+	FILE *arquivo = fopen("techvet.bd","r"); 
+	char msg[1024]; //criar uma variavel pra receber o que vou ler.
+    fgets(msg, 1024, arquivo); //leitura de uma linha do arquivo.
+    lerCliente(msg,NULL);
+	fclose(arquivo);
+}
+
+void lerCliente(char *clienteChar, struct cliente* cliente){ //transformar JSON em struct.
+	jsmn_parser p;
+	jsmntok_t t[128]; /* We expect no more than 128 tokens */
+	int i;
+	
+	jsmn_init(&p);
+	int r = jsmn_parse(&p, clienteChar, strlen(clienteChar), t, sizeof(t)/sizeof(t[0]));
+	if (r < 0) {
+		printf("Failed to parse JSON: %d\n", r);
+	}
+	for (i = 1; i < r; i++) {
+		if (jsoneq(clienteChar, &t[i], "codigoCliente") == 0) {
+			printf("- codigoCliente: %.*s\n", t[i+1].end-t[i+1].start, clienteChar + t[i+1].start);
+			i++;
+		}else if (jsoneq(clienteChar, &t[i], "nome") == 0) {
+			printf("- nome: %.*s\n", t[i+1].end-t[i+1].start, clienteChar + t[i+1].start);
+			i++;
+		} 
 	}
 }
