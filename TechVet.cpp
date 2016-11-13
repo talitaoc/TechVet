@@ -23,6 +23,7 @@ int main(){
 	
 	setlocale(LC_ALL,"Portuguese");
 	int i,menu1=1,menu2,menu3,quant_animal,quant_telefone;
+	int result_salvarCliente;
 	struct cliente cliente;
 	struct produto produto;
 	
@@ -72,95 +73,103 @@ int main(){
 							limparCliente(&cliente);
 							printf("********CADASTRAR UM NOVO CLIENTE********\n\n");
 							printf("\n\nINFORMAÇÕES PESSOAIS DO CLIENTE:\n");
-							printf("\nInsira o código do cliente:");
+							printf("\nInsira o código do cliente: ");
 							scanf("%d",&cliente.codigoCliente);
 							fflush(stdin);
-							printf("Informe o nome:");
+							printf("Informe o nome: ");
 							gets(cliente.nomeCliente);
 							fflush(stdin);
-							printf("Informe o e-mail:");
+							printf("Informe o e-mail: ");
 							gets(cliente.email);
 							fflush(stdin);
-							printf("Informe o sexo:\n");
+							printf("Informe o sexo: ");
 							scanf("%c",&cliente.sexoCliente);
 							fflush(stdin);
-							printf("Insira o CPF:\n");
-							scanf("%ll", &cliente.cpf);
+							printf("Insira o CPF: ");
+							scanf("%lld", &cliente.cpf);
 							fflush(stdin);
-							printf("Informe o dia de nascimento:\n");
+							printf("Informe o dia de nascimento: ");
 							scanf("%d", &cliente.data.dia);
 							fflush(stdin);
-							printf("Informe o mês de nascimento:\n");
+							printf("Informe o mês de nascimento: ");
 							scanf("%d", &cliente.data.mes);
 							fflush(stdin);
-							printf("Informe o ano de nascimento:\n");
+							printf("Informe o ano de nascimento: ");
 							scanf("%d", &cliente.data.ano);
 							fflush(stdin);
-							printf("\nINFORMAÇÕES RESIDENCIAIS:\n\n");
-							printf("Rua:\n");
+							
+							system("cls");
+							printf("\nINFORMAÇÕES RESIDENCIAIS:\n");
+							printf("Rua: ");
 							gets(cliente.endereco.rua);
 							fflush(stdin);
-							printf("Número:\n");
+							printf("Número: ");
 							scanf("%d", &cliente.endereco.numeroEndereco);
 							fflush(stdin);
-							printf("Complemento:\n");
+							printf("Complemento: ");
 							gets(cliente.endereco.complemento);
 							fflush(stdin);
-							printf("Bairro:\n");
+							printf("Bairro: ");
 							gets(cliente.endereco.bairro);
 							fflush(stdin);
-							printf("Cidade:\n");
+							printf("Cidade: ");
 							gets(cliente.endereco.cidade);
 							fflush(stdin);
-							printf("Estado:\n");
+							printf("Estado: ");
 							gets(cliente.endereco.estado);
 							fflush(stdin);
-							printf("CEP:\n");
+							printf("CEP: ");
 							scanf("%d", &cliente.endereco.cep);
 							fflush(stdin);
-							printf("\nINFORMAÇÕES DE CONTATO:\n\n");
+							
+							system("cls");
+							printf("\nINFORMAÇÕES DE CONTATO:\n");
 							do{
-								printf("Digite 1 para inserir os números telefones:\n");
-								printf("Digite 0 para sair:\n");
-								scanf("%d", &quant_telefone);
+								printf("\n1 - Inserir números telefones\n");
+								printf("0 - para sair\n");
+								quant_telefone=getch();
+								//scanf("%d", &quant_telefone);
 								fflush(stdin);
-								if(quant_telefone==1){
-									printf("DDD:\n");
+								if(quant_telefone=='1'){
+									printf("\nDDD: ");
 									scanf("%d",&cliente.contato[cliente.totalTelefones].ddd);
 									fflush(stdin);
-									printf("Telefone:\n");
+									printf("Telefone: ");
 									scanf("%d",&cliente.contato[cliente.totalTelefones].numeroTelefone);
 									fflush(stdin);
-									printf("Tipo: (0-fixo 1-celular 2-comercial)\n");
+									printf("Tipo: (1-fixo 2-celular 3-comercial) ");
 									scanf("%d",&cliente.contato[cliente.totalTelefones].tipo);
 									cliente.totalTelefones=cliente.totalTelefones+1;
 								}
-							}while(quant_telefone==1);
-							printf("\nINFORMAÇÕES DO ANIMAL:\n\n");
+							}while(quant_telefone=='1');
+							getch();
+							system("cls");
+							printf("\nINFORMAÇÕES DO ANIMAL:\n");
 							do{
-								printf("Digite 1 para inserir os dados no animal:\n");
-								printf("Digite 0 para sair:\n");
-								scanf("%d", &quant_animal);
+								printf("\n1 - Inserir Animal\n");
+								printf("0 - para sair\n");
+								quant_animal=getch();
+								//scanf("%d", &quant_animal);
 								fflush(stdin);
-								if(quant_animal==1){
-									printf("Digite o nome do animal:\n");
+								if(quant_animal=='1'){
+									printf("Digite o nome do animal: ");
 									gets(cliente.pet[cliente.totalAnimais].nomeAnimal);
 									fflush(stdin);
-									printf("Informe a raça do animal:\n");
+									printf("Informe a raça do animal: ");
 									gets(cliente.pet[cliente.totalAnimais].raca);
 									fflush(stdin);
-									printf("Informe o sexo do animal:\n");
+									printf("Informe o sexo do animal: ");
 									scanf("%c",&cliente.pet[cliente.totalAnimais].sexoAnimal);
 									fflush(stdin);
-									printf("Informe a idade do animal:\n");
+									printf("Informe a idade do animal: ");
 									scanf("%d", &cliente.pet[cliente.totalAnimais].idade);
 									fflush(stdin);
 									cliente.totalAnimais=cliente.totalAnimais+1;
 								}
 							}
-							while(quant_animal == 1);
-							salvarCliente(&cliente);
-							system("cls");
+							while(quant_animal == '1');
+							result_salvarCliente=salvarCliente(&cliente);
+							printf("Erro %d\n",result_salvarCliente);				
 						break;
 						case '2' :
 							printf("*********LISTAR TODOS OS CLIENTES CADASTRADOS********\n\n");
@@ -171,7 +180,7 @@ int main(){
 							printf("E-mail: %s\n", cliente.email);
 							printf("Sexo: %c\n", cliente.sexoCliente);
 							printf("Data de nascimento: %d/%d/%d\n", cliente.data.dia, cliente.data.mes, cliente.data.ano);
-							printf("CPF: %ll\n", cliente.cpf);
+							printf("CPF: %lld\n", cliente.cpf);
 							printf("DADOS RESIDENCIAIS:\n\n");
 							printf("Rua: %s\n", cliente.endereco.rua);
 							printf("Número: %d\n", cliente.endereco.numeroEndereco);
@@ -184,9 +193,9 @@ int main(){
 							for(i=0;i<cliente.totalTelefones;i++){
 								printf("DDD: %d\n", cliente.contato[i].ddd); 
 								printf("Telefone: %d\n",cliente.contato[i].numeroTelefone);
-								if(cliente.contato[i].tipo == 0){
+								if(cliente.contato[i].tipo == 1){
 									printf("Tipo: fixo\n");
-								}else if(cliente.contato[i].tipo == 1){
+								}else if(cliente.contato[i].tipo == 2){
 									printf("Tipo: celular\n");
 								}else {
 									printf("Tipo: comercial\n");
@@ -224,11 +233,11 @@ int main(){
 					printf("\n\t*                                                           *");
 					printf("\n\t*           # DIGITE O NUMERO DA OPCAO DESEJADA:            *");
 					printf("\n\t*                                                           *");
-					printf("\n\t*            1 - CADASTRAR PRODUTOS PARA VENDA ;            *");
-					printf("\n\t*            2 - LISTAR TODOS OS PRODUTOS CADASTRADOS ;     *");
+					printf("\n\t*            1 - CADASTRAR PRODUTOS PARA VENDA;             *");
+					printf("\n\t*            2 - LISTAR TODOS OS PRODUTOS CADASTRADOS;      *");
 					printf("\n\t*            3 - CONSULTAR PRODUTOS CADASTRADOS NO SISTEMA; *");
-					printf("\n\t*            4 - REMOVER PRODUTOS CADASTRADOS ;             *");
-					printf("\n\t*           ESC - VOLTAR AO MENU PRINCIPAL ;                *");
+					printf("\n\t*            4 - REMOVER PRODUTOS CADASTRADOS;              *");
+					printf("\n\t*           ESC - VOLTAR AO MENU PRINCIPAL.                 *");
 					printf("\n\t*                                                           *");
 					printf("\n\t*                                                           *");
 					printf("\n\t*************************************************************");
@@ -305,7 +314,7 @@ int salvarCliente(struct cliente* cliente){ //FILE é um tipo, uma struct.
 	}
 	strcat(auxiliar,&cliente->sexoCliente);
 	strcat(auxiliar,",\"cpf\":");
-	ltoa(cliente->cpf,buffer,10);
+	lltoa(cliente->cpf,buffer,10); //maldito c!!!
 	if(validalonglongInt(cliente->cpf) == false){
 		return ERRO_CPF; 
 	}
@@ -429,6 +438,7 @@ int salvarCliente(struct cliente* cliente){ //FILE é um tipo, uma struct.
 	strcat(auxiliar,"},\n");
 	fputs(auxiliar, arquivo); //escrever dentro do endereço criado.
 	fclose(arquivo);
+	return 0;
 }
 void leituraCliente(){ 
 	struct cliente cliente;
