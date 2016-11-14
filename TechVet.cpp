@@ -13,28 +13,6 @@
 
 #define ESC 27
 #define CODIGOCLIENTE 1
-#define ERRO_CODIGO 1
-#define ERRO_NOMECLIENTE 2
-#define ERRO_EMAIL 3
-#define ERRO_SEXOCLIENTE 4
-#define ERRO_CPF 5
-#define ERRO_DATADIA 6
-#define ERRO_DATAMES 7
-#define ERRO_DATAANO 8
-#define ERRO_PETNOME 9
-#define ERRO_PETRACA 10
-#define ERRO_PETSEXO 11
-#define ERRO_PETIDADE 12
-#define ERRO_TELEFONEDDD 13
-#define ERRO_NUMEROTELEFONE 14
-#define ERRO_TELEFONETIPO 15
-#define ERRO_RUA 16
-#define ERRO_COMPLEMENTO 17
-#define ERRO_BAIRRO 18
-#define ERRO_CIDADE 19
-#define ERRO_ESTADO 20
-#define ERRO_CEP 21
-#define ERRO_NUMEROENDERECO 22
 
 int salvarCliente(struct cliente* cliente);
 void leituraCliente();
