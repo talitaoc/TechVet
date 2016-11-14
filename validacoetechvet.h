@@ -81,12 +81,14 @@ void limparCliente (struct cliente *cliente){
 		limparChar(cliente->pet[i].raca,20);
 		limparChar(&cliente->pet[i].sexoAnimal);
 		limparInt(&cliente->pet[i].idade);
+		limparInt(&cliente->totalAnimais);
 	}
 	for(i=0; i<10; i++){
 		limparInt(&cliente->contato[i].ddd);
 		limparInt(&cliente->contato[i].numeroTelefone);
 		limparInt(&cliente->contato[i].tipo);
 	}
+	limparInt(&cliente->totalTelefones);
 	limparChar(cliente->endereco.rua,30);
 	limparChar(cliente->endereco.complemento,20);
 	limparChar(cliente->endereco.bairro,20);
