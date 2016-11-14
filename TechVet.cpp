@@ -55,8 +55,8 @@ int main(){
 		printf("\n\t*                                                           *");
 		printf("\n\t*        # DIGITE O NÚMERO DA OPÇÃO DESEJADA:               *");
 		printf("\n\t*                                                           *");
-		printf("\n\t*            1 - PRODUTOS E SERVIÇOS ;                      *");
-		printf("\n\t*            2 - ÁREA DE CLIENTES;                          *");
+		printf("\n\t*            1 - ÁREA DE CLIENTES;                          *");
+		printf("\n\t*            2 - PRODUTOS E SERVIÇOS ;                      *");
 		printf("\n\t*          ESC - SAIR DO PROGRAMA.                          *");
 		printf("\n\t*                                                           *");                                                       
 		printf("\n\t*                                                           *");
@@ -93,14 +93,14 @@ int main(){
 						case '1' :
 							limparCliente(&cliente);
 							printf("********CADASTRAR UM NOVO CLIENTE********\n\n");
-							printf("\nINFORMAÇÕES PESSOAIS DO CLIENTE:\n");
-							printf("Insira o código do cliente:\n");
+							printf("\n\nINFORMAÇÕES PESSOAIS DO CLIENTE:\n");
+							printf("\nInsira o código do cliente:");
 							scanf("%d",&cliente.codigoCliente);
 							fflush(stdin);
-							printf("Informe o nome:\n");
+							printf("Informe o nome:");
 							gets(cliente.nomeCliente);
 							fflush(stdin);
-							printf("Informe o e-mail:\n");
+							printf("Informe o e-mail:");
 							gets(cliente.email);
 							fflush(stdin);
 							printf("Informe o sexo:\n");
