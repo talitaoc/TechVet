@@ -30,6 +30,10 @@
 #define ERRO_ESTADO 20
 #define ERRO_CEP 21
 #define ERRO_NUMEROENDERECO 22
+#define ERRO_ESPECIE 23
+#define ERRO_CODIGOPRODUTO 24
+#define ERRO_NOMEPRODUTO 25
+#define ERRO_PRECO 26
 
 
 void limparChar(char vetor[], int tamanho){
@@ -71,6 +75,14 @@ bool validaInt (int valor){
 		return true;
 	}
 }
+bool validaFloat (float valor){
+	if(valor == 0){
+		return false;
+	}
+	else{
+		return true;
+	}
+}
 
 bool validaChar (char valor){
 	if(valor == '\0'){
@@ -104,6 +116,7 @@ void limparCliente (struct cliente *cliente){
 		limparChar(cliente->pet[i].nomeAnimal,20);
 		limparChar(cliente->pet[i].raca,20);
 		limparChar(&cliente->pet[i].sexoAnimal);
+		limparChar(cliente->pet[i].especie);
 		limparInt(&cliente->pet[i].idade);
 		limparInt(&cliente->totalAnimais);
 	}
@@ -121,7 +134,7 @@ void limparCliente (struct cliente *cliente){
 	limparInt(&cliente->endereco.numeroEndereco);
 }
 
-void limparproduto (struct produto *produto){
+void limparProduto (struct produto *produto){
 	limparInt(&produto->codigoProduto);
     limparChar(produto->nomeProduto,50);
 	limparFloat(&produto->preco);
@@ -163,7 +176,7 @@ void mostrarErro (int codigo, char* mERRO){
 			strcpy(mERRO, "Idade do animal inválida.");
 			break;
 		case ERRO_TELEFONEDDD:
-		strcpy(mERRO, "DDD inválido.");
+			strcpy(mERRO, "DDD inválido.");
 			break;
 		case ERRO_NUMEROTELEFONE:
 			strcpy(mERRO, "Número do telefone inválido.");
@@ -192,7 +205,18 @@ void mostrarErro (int codigo, char* mERRO){
 		case ERRO_NUMEROENDERECO:
 			strcpy(mERRO, "Número de endereço inválido.");
 			break;
+		case ERRO_ESPECIE:
+			strcpy(mERRO, "Espécie inválida.");
+			break;
+		case ERRO_CODIGOPRODUTO:
+			strcpy(mERRO, "Código produto inválido");
+			break;
+		case ERRO_NOMEPRODUTO:
+			strcpy(mERRO,"Nome produto inválido");
+			break;		
+		case ERRO_PRECO:
+			strcpy(mERRO, "Preço produto inválido");
+			break;		
 	}
-	
 }
 

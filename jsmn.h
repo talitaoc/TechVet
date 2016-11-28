@@ -399,18 +399,27 @@ static int jsoneq(const char *json, jsmntok_t *tok, const char *s) {
 
 static jsmntok_t tokensGerados[128];
 static int totalGerados = 0;
+static int tokensLidos[128];
 
 void parseDados(const char * json){
 	jsmn_parser p;
 	jsmn_init(&p);
 	totalGerados = jsmn_parse(&p, json, strlen(json), tokensGerados, sizeof(tokensGerados)/sizeof(tokensGerados[0]));
+	int i=0;
+	for(i=0;i<128;i++){
+		tokensLidos[i] = -1;
+	}
 }
 
-void obterDado(char * val, const char * json, const char * parametro){
+void obterDado(char * val, int sizeval, const char * json, const char * parametro){
 	int i;
+	for(i=0;i<sizeval;i++){
+		val[i] = '\0';
+	}
 	for (i = 1; i < totalGerados; i++) {
-		if (jsoneq(json, &tokensGerados[i], parametro) == 0) {
+		if (tokensLidos[i] == -1 && jsoneq(json, &tokensGerados[i], parametro) == 0) {
 			strncpy(val, json+tokensGerados[i+1].start,tokensGerados[i+1].end-tokensGerados[i+1].start);
+			tokensLidos[i] = 0;
 			break;
 		} 
 	}
